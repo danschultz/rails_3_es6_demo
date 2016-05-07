@@ -33,6 +33,7 @@ gem 'jquery-rails'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-system.js', '~> 0.19.26'
+  gem 'rails-assets-react', '~> 15.0.0'
 end
 
 # To use ActiveModel has_secure_password
