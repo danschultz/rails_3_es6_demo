@@ -8,6 +8,7 @@ PATH
 
 GEM
   remote: https://rubygems.org/
+  remote: https://rails-assets.org/
   specs:
     actionmailer (3.2.22)
       actionpack (= 3.2.22)
@@ -98,6 +99,7 @@ GEM
       activesupport (= 3.2.22)
       bundler (~> 1.0)
       railties (= 3.2.22)
+    rails-assets-system.js (0.19.27)
     railties (3.2.22)
       actionpack (= 3.2.22)
       activesupport (= 3.2.22)
@@ -140,6 +142,7 @@ DEPENDENCIES
   pry-remote
   pry-stack_explorer
   rails (= 3.2.22)
+  rails-assets-system.js (~> 0.19.26)!
   sass-rails (~> 3.2.3)
   sprockets2-es6!
   sqlite3
