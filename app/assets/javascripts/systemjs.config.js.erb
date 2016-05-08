@@ -1,4 +1,5 @@
 // Site-wide configuration for SystemJS
+
 <%
   env = Rails.application.assets
 
@@ -15,16 +16,40 @@
     .map { |path| env[path] }
     .select { |asset| filter_includes(asset.dependencies).size > 0 }
 
-  bundles = assets.reduce(Hash.new) { |memo, asset|
-    bundle = asset.logical_path.match(/^(.+?)\./)[1]
-    required_paths = filter_includes(asset.dependencies)
+  assets_hash = assets.reduce({}) { |memo, asset|
+    asset_name = asset.logical_path.match(/^(.+?)\./)[1]
+    dependencies = filter_includes(asset.dependencies)
       .map { |asset| asset.logical_path }
       .map { |path| path.match(/^(.+?)\./)[1] }
       .map { |path| "#{path}.js" }
 
-    memo["#{bundle}"] = required_paths.uniq
+    memo[asset_name] = {
+      :name => asset_name,
+      :digest => asset.digest,
+      :dependencies => dependencies
+    }
     memo
   }
+
+  bundles = assets_hash.values.reduce({}) { |memo, asset_data|
+    bundle_name = "#{asset_data[:name]}-#{asset_data[:digest]}"
+    memo[bundle_name] = asset_data[:dependencies]
+    memo
+  }
+
+  # bundles = assets.reduce({}) { |memo, asset|
+  #   bundle = asset.logical_path.match(/^(.+?)\./)[1]
+  #   dependencies = filter_includes(asset.dependencies)
+  #     .map { |asset| asset.logical_path }
+  #     .map { |path| path.match(/^(.+?)\./)[1] }
+  #     .map { |path| "#{path}.js" }
+  #
+  #   memo["#{bundle}"] = {
+  #     :digest => asset.digest,
+  #     :dependencies => dependencies
+  #   }
+  #   memo
+  # }
 %>
 
 (function(global) {
@@ -40,7 +65,7 @@
 
   // Tells SystemJS where to look for named imports.
   var map = {
-    "react": "vendor.js"
+    "react": "vendor-<%= assets_hash["vendor"][:digest] %>.js"
     // 'rxjs': 'node_modules/rxjs',
     // 'react': 'node_modules/react'
   };
@@ -52,6 +77,9 @@
     'react': {'format': 'global'}
     // 'app': { main: 'main.js',  defaultExtension: 'js' }
   };
+
+  // Set to `true` to disable loading of bundles in non-production environments.
+  var disableBundles = false;
 
   // Bundles that are manually configured.
   var manualBundles = {
@@ -68,7 +96,8 @@
     baseURL: baseURL,
     map: map,
     packages: packages,
-    bundles: merge(detectedBundles, manualBundles)
+    bundles: !disableBundles || <%= Rails.env.production? %> ?
+        merge(detectedBundles, manualBundles) : {}
   });
 
   function merge(a, b) {
