@@ -26,7 +26,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 
   # ES6
-  gem 'sprockets2-es6', path: "../sprockets2-es6"
+  gem 'sprockets2-es6', :git => 'https://github.com/Mixbook/sprocket2-es6.git'
 end
 
 gem 'jquery-rails'

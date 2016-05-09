@@ -1,5 +1,6 @@
-PATH
-  remote: ../sprockets2-es6
+GIT
+  remote: https://github.com/Mixbook/sprocket2-es6.git
+  revision: 517f6ee57334cd2af46aa1066b813b6300c3ec35
   specs:
     sprockets2-es6 (0.0.1)
       babel-source (>= 5.8.11)
