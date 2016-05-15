@@ -13,6 +13,8 @@ gem 'rails', '3.2.22'
 
 gem 'sqlite3'
 
+# ES6
+gem 'sprockets2-es6', :git => 'https://github.com/Mixbook/sprocket2-es6.git'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -25,16 +27,13 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
 
-  # ES6
-  gem 'sprockets2-es6', :git => 'https://github.com/Mixbook/sprocket2-es6.git'
+  source 'https://rails-assets.org' do
+    gem 'rails-assets-system.js', '~> 0.19.26'
+    gem 'rails-assets-react', '~> 15.0.0'
+  end
 end
 
 gem 'jquery-rails'
-
-source 'https://rails-assets.org' do
-  gem 'rails-assets-system.js', '~> 0.19.26'
-  gem 'rails-assets-react', '~> 15.0.0'
-end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

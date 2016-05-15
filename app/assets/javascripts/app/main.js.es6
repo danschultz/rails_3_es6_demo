@@ -9,7 +9,7 @@ export function main(container) {
   let pointC = pointA.add(pointB);
   console.log(`A + B = ${pointC}`);
 
-  let person = new Person("John Doe", 25);
+  let person = new Person("Jane Doe", 25);
 
   ReactDOM.render(<PersonView person={person}/>, container);
 }

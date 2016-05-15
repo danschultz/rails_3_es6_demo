@@ -56,6 +56,8 @@ module Rails3Es6Demo
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    config.assets.precompile += %w{ system.js.js app.js systemjs.config.js babel/external-helpers.js }
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
   end
